@@ -25,10 +25,10 @@ export default async function StatsPage() {
   const { stats = [], topSongs = [], topArtists = [] } = res;
 
   // Calculate totals
-  const totalSeconds = stats.reduce((acc, s) => acc + s.listeningTime, 0);
+  const totalSeconds = stats.reduce((acc: number, s: any) => acc + s.listeningTime, 0);
   const totalMinutes = Math.floor(totalSeconds / 60);
   const totalHours = (totalMinutes / 60).toFixed(1);
-  const totalTracks = stats.reduce((acc, s) => acc + s.trackCount, 0);
+  const totalTracks = stats.reduce((acc: number, s: any) => acc + s.trackCount, 0);
   
   const dailyAverageMin = stats.length > 0 
     ? Math.round(totalMinutes / stats.length) 
@@ -41,7 +41,7 @@ export default async function StatsPage() {
 
   // Find max listening time to calculate relative bar heights in chart
   const maxListeningTime = stats.length > 0 
-    ? Math.max(...stats.map((s) => s.listeningTime)) 
+    ? Math.max(...stats.map((s: any) => s.listeningTime)) 
     : 1;
 
   return (
