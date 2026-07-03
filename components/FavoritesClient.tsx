@@ -21,16 +21,16 @@ export default function FavoritesClient({ initialFavorites }: FavoritesClientPro
     setFavorites(initialFavorites);
   }, [initialFavorites]);
 
-  const songs = favorites.filter((f) => f.type === "TRACK");
-  const albums = favorites.filter((f) => f.type === "ALBUM");
-  const artists = favorites.filter((f) => f.type === "ARTIST");
+  const songs = favorites.filter((f: any) => f.type === "TRACK");
+  const albums = favorites.filter((f: any) => f.type === "ALBUM");
+  const artists = favorites.filter((f: any) => f.type === "ARTIST");
 
   const handleUnfavorite = async (item: any, e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
     
     // Optimistic remove
-    setFavorites((prev) => prev.filter((f) => f.id !== item.id));
+    setFavorites((prev) => prev.filter((f: any) => f.id !== item.id));
 
     try {
       await toggleFavorite({
@@ -45,7 +45,7 @@ export default function FavoritesClient({ initialFavorites }: FavoritesClientPro
   };
 
   // Convert favorite songs to standard Track model for PlayQueueButton & TrackList
-  const tracksList: Track[] = songs.map((s) => ({
+  const tracksList: Track[] = songs.map((s: any) => ({
     id: s.itemId,
     title: s.name,
     artistId: "unknown",
@@ -144,7 +144,7 @@ export default function FavoritesClient({ initialFavorites }: FavoritesClientPro
               <div className="py-12 text-center text-xs text-muted-foreground italic">No liked albums yet</div>
             ) : (
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                {albums.map((album) => (
+                {albums.map((album: any) => (
                   <div key={album.id} className="relative group">
                     <Link href={`/album/${album.itemId}`}>
                       <div className="bg-card/30 hover:bg-card/90 rounded-2xl p-4 border border-border/20 hover:border-border/60 transition-all duration-300 flex flex-col gap-3 shadow-md hover:shadow-xl cursor-pointer">
@@ -182,7 +182,7 @@ export default function FavoritesClient({ initialFavorites }: FavoritesClientPro
               <div className="py-12 text-center text-xs text-muted-foreground italic">No followed artists yet</div>
             ) : (
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                {artists.map((artist) => (
+                {artists.map((artist: any) => (
                   <div key={artist.id} className="relative group">
                     <Link href={`/artist/${artist.itemId}`}>
                       <div className="bg-card/30 hover:bg-card/90 rounded-2xl p-4 border border-border/20 hover:border-border/60 transition-all duration-300 flex flex-col items-center text-center gap-3 shadow-md hover:shadow-xl cursor-pointer">

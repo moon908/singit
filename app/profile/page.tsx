@@ -33,8 +33,8 @@ export default async function ProfilePage() {
   const playlists = playlistsRes.success ? playlistsRes.playlists || [] : [];
   const favorites = favoritesRes.success ? favoritesRes.favorites || [] : [];
 
-  const likedTracks = favorites.filter((f) => f.type === "TRACK");
-  const followedArtists = favorites.filter((f) => f.type === "ARTIST");
+  const likedTracks = favorites.filter((f: any) => f.type === "TRACK");
+  const followedArtists = favorites.filter((f: any) => f.type === "ARTIST");
 
   return (
     <div className="space-y-10 select-none">
