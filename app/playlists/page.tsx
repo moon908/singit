@@ -45,7 +45,7 @@ export default async function PlaylistsPage() {
         </div>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-          {playlists.map((playlist) => (
+          {playlists.map((playlist: any) => (
             <Link key={playlist.id} href={`/playlist/${playlist.id}`}>
               <div className="group bg-card/30 hover:bg-card/90 border border-border/20 hover:border-border/60 rounded-2xl p-4 transition-all duration-300 flex flex-col gap-3 shadow-md hover:shadow-xl cursor-pointer">
                 {/* Cover art container */}

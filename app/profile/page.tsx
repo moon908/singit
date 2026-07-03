@@ -103,7 +103,7 @@ export default async function ProfilePage() {
             </div>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-              {playlists.slice(0, 6).map((pl) => (
+              {playlists.slice(0, 6).map((pl: any) => (
                 <Link key={pl.id} href={`/playlist/${pl.id}`}>
                   <div className="group bg-card/30 hover:bg-card/90 rounded-2xl p-4 border border-border/20 hover:border-border/60 transition-all duration-300 flex flex-col gap-3 shadow-md hover:shadow-xl cursor-pointer">
                     <div className="aspect-square rounded-xl overflow-hidden shadow-sm shrink-0 bg-secondary flex items-center justify-center">
@@ -145,7 +145,7 @@ export default async function ProfilePage() {
             </div>
           ) : (
             <div className="glass border border-border/20 rounded-2xl p-4 space-y-3 max-h-[360px] overflow-y-auto no-scrollbar">
-              {followedArtists.slice(0, 5).map((artist) => (
+              {followedArtists.slice(0, 5).map((artist: any) => (
                 <Link key={artist.id} href={`/artist/${artist.itemId}`}>
                   <div className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-secondary/40 transition-colors cursor-pointer">
                     <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 border border-border/40">
