@@ -109,8 +109,8 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
       <div className="flex items-center justify-between p-5 h-[76px] shrink-0 border-b border-border/40">
         <Link href="/">
           <div className="flex items-center gap-3 cursor-pointer">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-primary to-emerald-400 flex items-center justify-center text-primary-foreground shadow-md shadow-primary/30">
-              <Music size={18} className="animate-pulse" />
+            <div className="w-9 h-9 rounded-xl overflow-hidden shadow-md shadow-primary/30 border border-primary/10 shrink-0">
+              <img src="/logo.jpg" alt="Logo" className="w-full h-full object-cover" />
             </div>
             {!isCollapsed && (
               <motion.span

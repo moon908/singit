@@ -9,13 +9,13 @@
   "theme_color": "#1db954",
   "icons": [
     {
-      "src": "https://img.jamendo.com/albums/s6/6122/covers/1.300.jpg",
+      "src": "/logo.jpg",
       "sizes": "192x192",
       "type": "image/jpeg",
       "purpose": "any maskable"
     },
     {
-      "src": "https://img.jamendo.com/albums/s6/6122/covers/1.300.jpg",
+      "src": "/logo.jpg",
       "sizes": "512x512",
       "type": "image/jpeg",
       "purpose": "any maskable"
