@@ -1,0 +1,155 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String          @id @default(cuid())
+  name          String?
+  email         String          @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?         // Password hash for credentials login
+  accounts      Account[]
+  sessions      Session[]
+  
+  playlists     Playlist[]
+  favorites     Favorite[]
+  history       History[]
+  settings      UserSettings?
+  stats         ListeningStats[]
+
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VerificationToken {
+  id         String   @id @default(cuid())
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Playlist {
+  id          String         @id @default(cuid())
+  name        String
+  description String?
+  coverImage  String?
+  isPublic    Boolean        @default(true)
+  userId      String
+  user        User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items       PlaylistItem[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model PlaylistItem {
+  id         String   @id @default(cuid())
+  playlistId String
+  playlist   Playlist @relation(fields: [playlistId], references: [id], onDelete: Cascade)
+  
+  // Track details stored for offline caching & display
+  trackId    String
+  title      String
+  artistName String
+  albumName  String?
+  coverUrl   String?
+  duration   Int      // in seconds
+  audioUrl   String
+  
+  position   Int      // sorting field for drag & drop
+  createdAt  DateTime @default(now())
+}
+
+model Favorite {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  type       String   // "TRACK" | "ALBUM" | "ARTIST"
+  itemId     String   // Jamendo ID
+  name       String
+  imageUrl   String?
+  subText    String?  // e.g. Artist name for track/album
+  audioUrl   String?  // Only for tracks
+  duration   Int?     // Only for tracks
+
+  createdAt  DateTime @default(now())
+  
+  @@unique([userId, type, itemId])
+}
+
+model History {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  trackId    String
+  title      String
+  artistName String
+  albumName  String?
+  coverUrl   String?
+  duration   Int      // in seconds
+  audioUrl   String
+  
+  playedAt   DateTime @default(now())
+}
+
+model UserSettings {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  theme           String   @default("dark") // "dark" | "light"
+  language        String   @default("en")   // "en" | "es" | "fr" | "de"
+  playbackQuality String   @default("high") // "high" | "low"
+  autoplay        Boolean  @default(true)
+  notifications   Boolean  @default(true)
+  privacyPrivate  Boolean  @default(false)
+}
+
+model ListeningStats {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  date          DateTime @default(now()) // grouped by day
+  listeningTime Int      // total listening time in seconds for the day
+  trackCount    Int      @default(0)     // number of songs played
+}

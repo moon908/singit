@@ -1,0 +1,24 @@
+{
+  "name": "SingIt Music Streamer",
+  "short_name": "SingIt",
+  "description": "Spotify-inspired premium, modern music streaming web application powered by the Jamendo API.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#08080a",
+  "theme_color": "#1db954",
+  "icons": [
+    {
+      "src": "https://img.jamendo.com/albums/s6/6122/covers/1.300.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://img.jamendo.com/albums/s6/6122/covers/1.300.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}
