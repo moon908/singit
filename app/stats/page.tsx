@@ -111,7 +111,7 @@ export default async function StatsPage() {
             </div>
           ) : (
             <div className="h-48 flex items-end justify-between w-full max-w-xl mx-auto px-4 border-b border-border/20">
-              {stats.map((s, index) => {
+              {stats.map((s: any, index: number) => {
                 // Calculate height factor
                 const pct = (s.listeningTime / maxListeningTime) * 100;
                 const minutes = Math.floor(s.listeningTime / 60);
@@ -151,7 +151,7 @@ export default async function StatsPage() {
             {topSongs.length === 0 ? (
               <div className="py-12 text-center text-xs text-muted-foreground italic">No songs streamed yet</div>
             ) : (
-              topSongs.map((song, index) => (
+              topSongs.map((song: any, index: number) => (
                 <div key={song.trackId} className="flex items-center gap-3.5 p-2 rounded-2xl hover:bg-secondary/40 transition-colors">
                   <span className={`w-6 text-center text-xs font-black ${index === 0 ? "text-primary" : "text-muted-foreground"}`}>
                     #{index + 1}
@@ -183,7 +183,7 @@ export default async function StatsPage() {
             {topArtists.length === 0 ? (
               <div className="py-12 text-center text-xs text-muted-foreground italic">No artists streamed yet</div>
             ) : (
-              topArtists.map((artist, index) => (
+              topArtists.map((artist: any, index: number) => (
                 <div key={artist.artistName} className="flex items-center gap-3.5 p-2.5 rounded-2xl hover:bg-secondary/40 transition-colors">
                   <span className={`w-6 text-center text-xs font-black ${index === 0 ? "text-primary" : "text-muted-foreground"}`}>
                     #{index + 1}
