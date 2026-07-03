@@ -53,7 +53,7 @@ export default async function HistoryPage() {
   const grouped = groupHistoryByDay(historyList);
 
   // Convert history entries to standard Track shape
-  const allTracks: Track[] = historyList.map((h) => ({
+  const allTracks: Track[] = historyList.map((h: any) => ({
     id: h.trackId,
     title: h.title,
     artistId: "unknown",
@@ -98,7 +98,7 @@ export default async function HistoryPage() {
         <div className="space-y-8">
           {Object.entries(grouped).map(([dayLabel, items]) => {
             // Map day items to standard Track shapes
-            const dayTracks: Track[] = items.map((h) => ({
+            const dayTracks: Track[] = items.map((h: any) => ({
               id: h.trackId,
               title: h.title,
               artistId: "unknown",
