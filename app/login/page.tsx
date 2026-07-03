@@ -5,7 +5,7 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Music, Mail, Lock, User, LogIn, UserPlus, ShieldAlert, Check } from "lucide-react";
-import { registerUser } from "@/server/actions/auth";
+import { registerUser, loginUser } from "@/server/actions/auth";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -46,14 +46,14 @@ export default function LoginPage() {
     } else {
       // 2. Sign In Flow
       try {
-        const res = await signIn("credentials", {
-          email,
-          password,
-          redirect: false,
-        });
+        const formData = new FormData();
+        formData.append("email", email);
+        formData.append("password", password);
 
-        if (res?.error) {
-          setError("Invalid email or password combination");
+        const res = await loginUser(formData);
+
+        if (!res.success) {
+          setError(res.error || "Invalid email or password combination");
           setLoading(false);
         } else {
           router.push("/");

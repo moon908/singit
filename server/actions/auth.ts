@@ -2,6 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import crypto from "crypto";
+import { signIn } from "@/auth";
 
 function hashPassword(password: string): string {
   const salt = crypto.randomBytes(16).toString("hex");
@@ -51,5 +52,39 @@ export async function registerUser(formData: any) {
   } catch (error: any) {
     console.error("Registration error:", error);
     return { success: false, error: error.message || "Failed to register user" };
+  }
+}
+
+export async function loginUser(formData: any) {
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+
+  if (!email || !password) {
+    return { success: false, error: "Email and password are required" };
+  }
+
+  try {
+    await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
+    return { success: true };
+  } catch (error: any) {
+    // Bubble up next.js redirection errors
+    if (error.digest?.startsWith("NEXT_REDIRECT")) {
+      throw error;
+    }
+
+    const isCredentialsError = error.type === "CredentialsSignin" || 
+                              error.message?.includes("CredentialsSignin") ||
+                              error.code === "credentials";
+
+    if (isCredentialsError) {
+      return { success: false, error: "Invalid email or password combination" };
+    }
+
+    console.error("Login action error:", error);
+    return { success: false, error: "An unexpected error occurred. Please try again." };
   }
 }
